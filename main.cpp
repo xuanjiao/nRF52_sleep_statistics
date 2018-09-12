@@ -45,7 +45,7 @@ int main()
     Thread *thread;
     int id;
 
-    id = stats_queue->call_every(SAMPLE_TIME, print_stats);
+    id = stats_queue->call_every(SAMPLE_TIME_MS, print_stats);
     printf("%-20s%-20s%-20s%-20s\n", "Uptime[ms]", "Idle Time[ms]",
 		"Sleep time[ms]", "DeepSleep time[ms]");
 

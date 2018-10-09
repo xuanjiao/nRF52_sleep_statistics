@@ -35,7 +35,7 @@ void print_stats()
     printf("%-20lld", stats.uptime/1000);
     printf("%-20lld", stats.idle_time/1000);
     printf("%-20lld", stats.sleep_time/1000);
-    printf("%-20lld\n", stats.deep_sleep_time/1000);
+    printf("%-20lld\r\n", stats.deep_sleep_time/1000);
 }
 
 int main()
@@ -46,7 +46,7 @@ int main()
     int id;
 
     id = stats_queue->call_every(SAMPLE_TIME_MS, print_stats);
-    printf("%-20s%-20s%-20s%-20s\n", "Uptime[ms]", "Idle Time[ms]",
+    printf("%-20s%-20s%-20s%-20s\r\n", "Uptime[ms]", "Idle Time[ms]",
 		"Sleep time[ms]", "DeepSleep time[ms]");
 
     thread = new Thread(osPriorityNormal, 1024);

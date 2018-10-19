@@ -52,7 +52,7 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 
  In a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead. 
 
-![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.png)
+![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.PNG)
 
 **Deep sleep lock is released**
 

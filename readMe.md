@@ -44,15 +44,15 @@ if your application requires high frequency requires ticker or short wake up tim
 
 #### Some comparation on before and after holding a deep sleep lock
 
-Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time, deep sleep time,CPU usage.
+Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time, deep sleep time,CPU usage. The deep sleep time in 5000us period is circled in red.
 
 
 
 **Hold a deep sleep lock**
 
- In a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead. 
+ In a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead.
 
-![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.PNG)
+![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.png)
 
 **Deep sleep lock is released**
 
@@ -65,9 +65,16 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 #### How to hold and release a deep sleep lock
 
 - when a DeepSleepLock object is created, its constructor is called, and the lock is held.
-- when the DeepSleepLock object is restored, the lock is relased, and the deep sleep mode will be restored to their previous state
+
+- when the DeepSleepLock object is restored, the lock is released, and the deep sleep mode will be restored to their previous state
+
+  Example: 
 
 ![how_to_lock_deep_sleep](./Image/how_to_lock_deep_sleep.PNG)
+
+The deep sleep time in 5000us period is circled in red.
+
+![](./Image/deep_sleep_lock_20s_highlight.PNG)
 
 For more information please refer to 
 

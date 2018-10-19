@@ -74,7 +74,7 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 
 The deep sleep time in 5000us period is circled in red.
 
-![](.<7Image/how_to_lock_deep_sleep.PNG)
+![](./Image/deep_sleep_lock_20s_highlight.PNG)
 
 For more information please refer to 
 

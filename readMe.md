@@ -32,7 +32,7 @@ Sleep manager is the part of the system that decides which sleep mode we pick. T
 
 
 
-![](D:\aconnoMbedStatistics\Image\sleep_manager.PNG)
+![](./Image/sleep_manager.PNG)
 
 
 
@@ -52,13 +52,13 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 
  In a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead. 
 
-![1539947941438](D:\aconnoMbedStatistics\Image\hold_deep_sleep_lock_time_highlight.png)
+![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.png)
 
 **Deep sleep lock is released**
 
  In a period of 5000us, the processor deep sleep for 4998us 
 
-![1539947490039](D:\aconnoMbedStatistics\Image\allow_deep_sleep_time_highlight.png)
+![1539947490039](./Image/allow_deep_sleep_time_highlight.png)
 
 
 
@@ -67,7 +67,7 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 - when a DeepSleepLock object is created, its constructor is called, and the lock is held.
 - when the DeepSleepLock object is restored, the lock is relased, and the deep sleep mode will be restored to their previous state
 
-![how_to_lock_deep_sleep](D:\aconnoMbedStatistics\Image\how_to_lock_deep_sleep.PNG)
+![how_to_lock_deep_sleep](./Image/how_to_lock_deep_sleep.PNG)
 
 For more information please refer to 
 

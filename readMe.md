@@ -35,7 +35,7 @@ Developer don't need to call sleep() in most cases, because mbed OS will pick th
 | **Power saving**  | save less power                      | save more power                                              |
 | **Wakeup time**   | 10us                                 | 10ms                                                         |
 | **Description**   | low and high-speed clocks are active | high-speed clocks turn off, only low clocks are active       |
-| **Requirement**   |                                      | when peripherals relying on high-speed clocks are not in use |
+| **Requirement**   | no special requirement               | when peripherals relying on high-speed clocks are not in use |
 | **Wakeup source** | any interrupt                        | watchdog, low power ticker, GPIO                             |
 
 

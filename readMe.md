@@ -18,63 +18,97 @@ Program prints statistics on stdio every SAMPLE_TIME_MS with the following data:
 
 >**Awake time** - Time spent in users thread (outside idle and sleep modes: active time - idle time)
 
-
+****
 
 ## New mbed OS features (mbed OS 5.10):
 
 
 
-### Sleep manager
+### Sleep in mbed OS
 
-##### What is sleep manager
+Developer don't need to call sleep() in most cases, because mbed OS will pick the right sleep mode. it will enter the sleep mode, stay as long as it can and wake up and continue execution.
 
-Sleep manager is the part of the system that decides which sleep mode we pick. To make sleep manager pick sleep mode, we can hold deep sleep lock.
+#### Comparison between sleep and deep sleep mode
+
+|                   | Sleep mode                           | Deep sleep mode                                              |
+| ----------------- | ------------------------------------ | ------------------------------------------------------------ |
+| **Power saving**  | save less power                      | save more power                                              |
+| **Wakeup time**   | 10us                                 | 10ms                                                         |
+| **Description**   | low and high-speed clocks are active | high-speed clocks turn off, only low clocks are active       |
+| **Requirement**   |                                      | when peripherals relying on high-speed clocks are not in use |
+| **Wakeup source** | any interrupt                        | watchdog, low power ticker, GPIO                             |
 
 
+
+#### What is sleep manager?
+
+Sleep manager is the part of the system that decides which sleep mode we pick. 
+
+To make sleep manager pick sleep mode, we can hold deep sleep lock. Please refer to "[How to lock deep sleep](#How to lock deep sleep) " for more details.
 
 ![](./Image/sleep_manager.PNG)
 
 
 
-### Deep sleep lock
+#### How to lock deep sleep
 
-if your application requires high frequency requires ticker or short wake up time, it is better to hold deep sleep lock. It prevents deep sleep.
+Way 1: use sleep manager API
 
+Way 2: use Deep sleep lock class
 
+​	
 
-#### Some comparation on before and after holding a deep sleep lock
+### Way 1: use sleep manager API
+
+#### How to use sleep manager API
+
+- when  `sleep_manager_can_deep_sleep()` is called, its returns the deep sleep lock status. 1 for not locked (deep sleep allowed), 0 for not lock (deep sleep not allowed).
+- when ` sleep_manager_lock_deep_sleep()`is called, and the system lock is deep sleep, which means deep sleep not allowed now.
+
+##### Example: 
+
+![](D:\aconnoMbedStatistics\Image\how_to_use_sleep_manager_API.PNG)
+
+##### Example Output:
 
 Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time, deep sleep time,CPU usage. The deep sleep time in 5000us period is circled in red.
 
+After ` sleep_manager_lock_deep_sleep()`is called, in a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead. The `sleep_manager_can_deep_sleep()` return 0 (deep sleep not allowed).
 
+![](D:\aconnoMbedStatistics\Image\sleep_manager_test_highlight.png)
 
-**Hold a deep sleep lock**
+### Way 2: use DeepSleepLock Class
 
- In a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead.
+if your application requires high frequency requires ticker or short wake up time, it is better to hold deep sleep lock. Deep sleep lock prevents deep sleep.
 
-![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.PNG)
+Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time, deep sleep time,CPU usage. The deep sleep time in 5000us period is circled in red.
 
-**Deep sleep lock is released**
-
- In a period of 5000us, the processor deep sleep for 4998us 
-
-![1539947490039](./Image/allow_deep_sleep_time_highlight.png)
-
-
-
-#### How to hold and release a deep sleep lock
+#### How to use DeepSleepLock Object
 
 - when a DeepSleepLock object is created, its constructor is called, and the lock is held.
+- when the DeepSleepLock object is restored, the lock is released, and the deep sleep mode will be restored to their previous state.
 
-- when the DeepSleepLock object is restored, the lock is released, and the deep sleep mode will be restored to their previous state
+##### Example: 
 
-  Example: 
 
-![how_to_lock_deep_sleep](./Image/how_to_lock_deep_sleep.PNG)
+
+![how_to_lock_deep_sleep](D:/aconnoMbedStatistics/Image/how_to_lock_deep_sleep.PNG)
+
+##### Example output: 
 
 The deep sleep time in 5000us period is circled in red.
 
-![](./Image/deep_sleep_lock_20s_highlight.png)
+![](D:/aconnoMbedStatistics/Image/deep_sleep_lock_20s_highlight.png)
+
+
+
+After DeepSleepLock object is created, in a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead.
+
+![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.PNG)
+
+After DeepSleepLock object is released, in a period of 5000us, the processor deep sleep for 4998us 
+
+![1539947490039](./Image/allow_deep_sleep_time_highlight.png)
 
 
 For more information please refer to 

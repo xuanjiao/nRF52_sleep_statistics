@@ -24,7 +24,6 @@ int32_t wait_time = 1000;
 void busy_thread()
 {
     
-    printf("lock deep sleep\r\n");
     wait_ms(wait_time);
     for(int i=~0; i>0; i--)
 	{
@@ -33,7 +32,7 @@ void busy_thread()
 	}
 }
 
-void busy_thread_20_s(){
+void test_deep_sleep_lock(){
 	  
 	{
 	    	DeepSleepLock lock;     	 	
@@ -45,6 +44,28 @@ void busy_thread_20_s(){
 	}
 	printf("deep lock object is restored\r\n");
 	ThisThread::sleep_for(20000);
+}
+
+void test_sleep_manager(){
+	int ret;
+    	
+	ThisThread::sleep_for(10000);
+
+	// ckeck whether deep sleep is allowed
+    	ret = sleep_manager_can_deep_sleep();
+    	printf("\ndeep sleep allowed: %d\r\n",ret);
+	
+	ThisThread::sleep_for(20000);
+	
+	// lock deep sleep
+	sleep_manager_lock_deep_sleep(); 
+	printf("lock deep sleep\r\n"); 
+	
+	ThisThread::sleep_for(20000);
+	
+	// ckeck whether deep sleep is allowed
+    	ret = sleep_manager_can_deep_sleep();
+    	printf("deep sleep allowed: %d\r\n",ret);
 	return;
 }
 
@@ -113,22 +134,17 @@ int main()
     Thread *thread;
     int id;
     id = stats_queue->call_every(SAMPLE_TIME_MS, print_stats);
-    printf("%-20s%-20s%-20s%-20s\n", "Uptime[ms]", "Idle Time[ms]",
+    printf("%-20s%-20s%-20s%-20s\r\n", "Uptime[ms]", "Idle Time[ms]",
 		"Sleep time[ms]", "DeepSleep time[ms]");
-     printf("%-20s%-20s%-20s%-20s\n", "Period Uptime[ms]", "Period Idle Time[ms]",  
+     printf("%-20s%-20s%-20s%-20s\r\n", "Period Uptime[ms]", "Period Idle Time[ms]",  
 		"Period Sleep time[ms]", "Period DeepSleep time[ms]");
-     printf("%-20s%-20s%-20s%-20s\n", "Uptime percentage[%]", "Idle percentage[%]",  
+     printf("%-20s%-20s%-20s%-20s\r\n", "Uptime percentage[%]", "Idle percentage[%]",  
 		"Slieep percentage[%]", "DeepSleep percentage[%]");
     
     thread = new Thread(osPriorityNormal, 1024);
     
-     thread->start(busy_thread_20_s);
-
-    
-
-    // Deep sleep allow
-    //printf("allow deep sleep\r\n");
-    //sleep_manager_can_deep_sleep();
+    thread->start(test_deep_sleep_lock);
+    //thread->start(test_sleep_manager);
     
     stats_queue->dispatch_forever();
 

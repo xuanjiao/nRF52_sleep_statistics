@@ -56,7 +56,7 @@ To make sleep manager pick sleep mode, we can hold deep sleep lock. Please refer
 
 [Way 2: use DeepSleepLock Class](#Way 2: use DeepSleepLock Class)
 
-​	
+	
 
 ### Way 1: use sleep manager API
 
@@ -67,7 +67,7 @@ To make sleep manager pick sleep mode, we can hold deep sleep lock. Please refer
 
 ##### Example: 
 
-![](.Image/how_to_use_sleep_manager_API.PNG)
+![](./Image/how_to_use_sleep_manager_API.PNG)
 
 ##### Example Output:
 

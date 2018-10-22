@@ -56,7 +56,7 @@ To make sleep manager pick sleep mode, we can hold deep sleep lock. Please refer
 
 [Way 2: use DeepSleepLock Class](#Way 2: use DeepSleepLock Class)
 
-​	
+	
 
 ### Way 1: use sleep manager API
 
@@ -92,24 +92,18 @@ Program prints statistics on RTT Viewer. It prints Uptime, idle time, sleep time
 
 
 
-![how_to_lock_deep_sleep](./Image/how_to_lock_deep_sleep.PNG)
+![how_to_lock_deep_sleep](./Image/how_to_use_deep_sleep_lock_object.PNG)
 
 ##### Example output: 
 
 The deep sleep time in 5000us period is circled in red.
 
-![](./Image/deep_sleep_lock_20s_highlight.png)
+- After DeepSleepLock object is created, in a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead.
 
 
+- After DeepSleepLock object is released, in a period of 5000us, the processor deep sleep for 4998us 
 
-After DeepSleepLock object is created, in a period of 5000us, the processor doesn't go to deep sleep. It sleep for 4998us instead.
-
-![1539947941438](./Image/hold_deep_sleep_lock_time_highlight.PNG)
-
-After DeepSleepLock object is released, in a period of 5000us, the processor deep sleep for 4998us 
-
-![1539947490039](./Image/allow_deep_sleep_time_highlight.png)
-
+![](./Image/deep_sleep_lock_object_highlight.png)
 
 For more information please refer to 
 
